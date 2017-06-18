@@ -58,7 +58,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     UpdateFromY(y);
 }
 
-void KalmanFilter::UpdateFromY(constVectorXd &y){
+void KalmanFilter::UpdateFromY(const VectorXd &y){
     MatrixXd Ht = H_.transpose();
     MatrixXd S = Ht * P_ * Ht + R_;
     MatrixXd Si = S.inverse();
