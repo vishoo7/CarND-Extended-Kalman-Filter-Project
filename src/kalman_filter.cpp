@@ -8,26 +8,20 @@ KalmanFilter::KalmanFilter() {}
 
 KalmanFilter::~KalmanFilter() {}
 
-void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in, MatrixXd &Q_in) {
+void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in) {
   x_ = x_in;
   P_ = P_in;
-  F_ = F_in;
-  Q_ = Q_in;
 }
 
 void KalmanFilter::Predict() {
-  /**
-  I implemented this from https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/3612b91d-9c33-47ad-8067-a572a6c93837/concepts/a0604e14-2832-4646-835a-05f972453f3d
-  u is 0, 0 because the noise mean is 0
-  */
   x_ = F_ * x_;
   MatrixXd Ft = F_.transpose();
   P_ = F_ * P_ * Ft + Q_;
 }
 
 void KalmanFilter::Update(const VectorXd &z) {
-  VectorXd y = z - H_ * x_;
-  UpdateFromY(y);
+    VectorXd y = z - H_ * x_;
+    UpdateFromY(y);
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
@@ -39,18 +33,6 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
     h << rho, theta, rho_dot;
 
     VectorXd y = z - h;
-
-    //Normalize angles to between -pi and pi
-    if (y(1) < -M_PI){
-        while(y(1) < -M_PI){
-            y(1) += (2 * M_PI);
-        }
-    }
-    else if(y(1) > M_PI){
-        while(y(1) < M_PI){
-            y(1) -= (2 * M_PI);
-        }
-    }
 
     UpdateFromY(y);
 }
