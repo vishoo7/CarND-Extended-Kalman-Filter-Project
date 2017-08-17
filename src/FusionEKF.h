@@ -32,7 +32,7 @@ public:
     KalmanFilter ekf_;
 
 private:
-    const float PI = atan(1) * 4;
+    const float PI_ = atan(1) * 4;
     // check whether the tracking toolbox was initialized or not (first measurement)
     bool is_initialized_;
 

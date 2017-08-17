@@ -68,7 +68,7 @@ public:
     void UpdateFromY(const Eigen::VectorXd &y);
 
 private:
-    const float PI = atan(1) * 4;
+    const float PI_ = atan(1) * 4;
 };
 
 #endif /* KALMAN_FILTER_H_ */

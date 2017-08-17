@@ -33,10 +33,10 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
     VectorXd y = z - h;
 
-    if( y(1) > PI )
-        y(1) -= 2*PI;
-    if( y(1) < -PI )
-        y(1) += 2*PI;
+    if( y(1) > PI_ )
+        y(1) -= 2*PI_;
+    if( y(1) < -PI_ )
+        y(1) += 2*PI_;
 
     UpdateFromY(y);
 }
