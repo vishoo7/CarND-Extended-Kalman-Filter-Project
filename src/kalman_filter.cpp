@@ -24,9 +24,14 @@ void KalmanFilter::Update(const VectorXd &z) {
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-    double rho = sqrt(x_(0) * x_(0) + x_(1) * x_(1));
-    double theta = atan(x_(1) / x_(0));
-    double rho_dot = (x_(0) * x_(2) + x_(1) * x_(3)) / rho;
+
+    float px = x_(0);
+    float py = x_(1);
+    float vx = x_(2);
+    float vy = x_(3);
+    float rho = sqrt(pow(px,2)+pow(py,2));
+    float theta = atan2(py,px);
+    float rho_dot = (px * vx + py * vy)/rho;
 
     VectorXd h = VectorXd(3);
     h << rho, theta, rho_dot;
@@ -50,5 +55,6 @@ void KalmanFilter::UpdateFromY(const VectorXd &y){
     // update state vector and covariance matrix
     x_ = x_ + (K * y);
     MatrixXd I = MatrixXd::Identity(x_.size(), x_.size());
+
     P_ = (I - K * H_) * P_;
 }
